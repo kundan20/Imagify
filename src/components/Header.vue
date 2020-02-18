@@ -1,27 +1,45 @@
 <template>
 <!-- ui secondary pointing menu  -->
-    <div class="ui tabular menu">
-        <a href = "/" class="item active">
+    <div class="ui secondary pointing menu">
+
+        <router-link to="/" class="item active">
             <strong> Imagify </strong>
-        </a>  
+        </router-link>
+
         <div class="right menu">
-            <a class="ui item" @click="login">
+            <div v-if="isLoggedIn" class="horizontal">
+                <router-link to="/" class="ui item">
+                    Gallery
+                </router-link>
+                <router-link to="/upload"  class="ui item">
+                    Upload
+                </router-link>
+                <a class="ui item" @click="logout">
+                    Logout
+                </a>
+            </div>
+            <a v-else class="ui item" @click="login">
                 Login
             </a>
         </div>      
+
     </div>    
 </template> 
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     name: 'Header',
-    methods: mapActions(['login'])    
+    computed: mapGetters(['isLoggedIn']),
+    methods: mapActions(['login', 'logout'])    
 };
 
 </script>
 
 <style scoped>
-
+    .horizontal {
+        display: flex;
+        flex-direction: row;
+    }
 </style>
